@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 954ce9337d1a04041936f015a3ed4522
+timeCreated: 1487451416
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Biondi
+  fontNames:
+  - Biondi
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
