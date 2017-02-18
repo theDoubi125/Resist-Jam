@@ -3,12 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[System.Serializable]
-public class Stat
+public enum StatType
 {
-    public int value { get; private set; }
-
-
+    SECURITY, ANIMATORS, MONEY_COLLECTORS, CAMERAMEN
 }
 
 public class StatPanel : MonoBehaviour
@@ -33,12 +30,14 @@ public class StatPanel : MonoBehaviour
 
     private ConfigMenu m_mainMenu;
 
+    [SerializeField]
+    private StatType m_type;
+
 	void Start ()
     {
         m_valueText.text = "" + m_value;
         m_moneyCostText.text = "" + m_moneyCost + " €";
         m_benevolentCostText.text = "" + m_benevolentCost;
-
     }
 
     public void SetMainMenu(ConfigMenu menu)
@@ -66,4 +65,7 @@ public class StatPanel : MonoBehaviour
         m_value--;
         m_valueText.text = "" + m_value;
     }
+
+    public StatType Type { get { return m_type; } }
+    public int Value { get { return m_value; } }
 }
