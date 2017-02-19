@@ -23,7 +23,9 @@ public class ProtestSpawner : MonoBehaviour
     {
 		for(int i=0; i<m_protesterCount; i++)
         {
-            m_protesters.Add(Transform.Instantiate<Transform>(m_protesterPrefab, Quaternion.Euler(0, Random.Range(0f, 360f), 0) * new Vector3(Random.Range(0f, m_spawnRadius), 0, 0), Quaternion.identity));
+            Transform protester = Transform.Instantiate<Transform>(m_protesterPrefab, Quaternion.Euler(0, Random.Range(0f, 360f), 0) * new Vector3(Random.Range(0f, m_spawnRadius), 0, 0), Quaternion.identity);
+            protester.GetComponent<WalkingProtester>().SetSpawner(this);
+            m_protesters.Add(protester);
         }
         UpdatePos();
     }
