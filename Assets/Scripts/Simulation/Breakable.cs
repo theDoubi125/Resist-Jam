@@ -5,14 +5,20 @@ using UnityEngine;
 public class Breakable : MonoBehaviour
 {
     [SerializeField]
-    private Sprite m_brokenSprite;
+    Transform[] m_brokenElements = null;
+    [SerializeField]
+    Transform[] m_intactElements = null;
 
     private SpriteRenderer m_renderer;
 
 	void Start ()
     {
         m_renderer = GetComponent<SpriteRenderer>();
-	}
+        foreach (Transform element in m_brokenElements)
+            element.gameObject.SetActive(false);
+        foreach (Transform element in m_intactElements)
+            element.gameObject.SetActive(true);
+    }
 	
 	void Update ()
     {
@@ -21,6 +27,9 @@ public class Breakable : MonoBehaviour
 
     public void Break()
     {
-        m_renderer.sprite = m_brokenSprite;
+        foreach (Transform element in m_brokenElements)
+            element.gameObject.SetActive(true);
+        foreach (Transform element in m_intactElements)
+            element.gameObject.SetActive(false);
     }
 }
