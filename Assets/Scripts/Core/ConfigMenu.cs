@@ -16,6 +16,10 @@ public class ConfigMenu : MonoBehaviour
     [SerializeField]
     private int m_money;
 
+    [SerializeField]
+    private int m_animCount = 2;
+
+
 	void Start ()
     {
         m_statPanels = GetComponentsInChildren<StatPanel>();

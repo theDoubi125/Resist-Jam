@@ -49,10 +49,14 @@ public class WalkingProtester : MonoBehaviour
     Animation[] m_animations;
 
     private Rigidbody m_rigidbody;
+    private Animator m_animator;
 
 	void Start ()
     {
         m_rigidbody = GetComponent<Rigidbody>();
+        m_animator = GetComponentInChildren<Animator>();
+        float animId = UnityEngine.Random.Range(0, 2);
+        m_animator.SetFloat("Blend", (int)animId);
     }
 	
 	void FixedUpdate ()
