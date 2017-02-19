@@ -14,10 +14,10 @@ public class WalkingProtester : MonoBehaviour
     private float m_maxDeviation = 30;
 
     [SerializeField]
-    private float m_maxSpeed = 10;
+    protected float m_maxSpeed = 10;
 
     [SerializeField]
-    private float m_minSpeed = 20;
+    protected float m_minSpeed = 20;
 
     [SerializeField]
     private float m_turnSpeed = 1;
@@ -46,20 +46,20 @@ public class WalkingProtester : MonoBehaviour
     private float m_outOfRoadStrength = 60;
 
     [SerializeField]
-    Animation[] m_animations;
+    private float m_skinCount;
 
-    private Rigidbody m_rigidbody;
+    protected Rigidbody m_rigidbody;
     private Animator m_animator;
 
-	void Start ()
+    public virtual void Start ()
     {
         m_rigidbody = GetComponent<Rigidbody>();
         m_animator = GetComponentInChildren<Animator>();
-        float animId = UnityEngine.Random.Range(0, 2);
+        float animId = UnityEngine.Random.Range(0, m_skinCount);
         m_animator.SetFloat("Blend", (int)animId);
     }
-	
-	void FixedUpdate ()
+
+    public virtual void FixedUpdate ()
     {
         Quaternion targetRotation = Quaternion.LookRotation(m_walkDirection);
         if (m_targetAngle > m_angle)
