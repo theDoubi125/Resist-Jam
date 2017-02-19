@@ -51,12 +51,20 @@ public class WalkingProtester : MonoBehaviour
     protected Rigidbody m_rigidbody;
     private Animator m_animator;
 
+    [SerializeField]
+    protected ProtestSpawner m_spawner;
+
     public virtual void Start ()
     {
         m_rigidbody = GetComponent<Rigidbody>();
         m_animator = GetComponentInChildren<Animator>();
         float animId = UnityEngine.Random.Range(0, m_skinCount);
         m_animator.SetFloat("Blend", (int)animId);
+    }
+
+    public void SetSpawner(ProtestSpawner spawner)
+    {
+        m_spawner = spawner;
     }
 
     public virtual void FixedUpdate ()

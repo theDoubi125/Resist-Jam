@@ -37,8 +37,10 @@ public class Hooligan : WalkingProtester
 
     private SpriteRenderer m_renderer;
     private int m_lastAnimId = 0;
+    private float m_posFromCenter = 0;
 
     private HashSet<Breakable> m_checkedBreakables = new HashSet<Breakable>();
+    private bool m_getBack = false;
 
     public override void Start()
     {
@@ -49,7 +51,19 @@ public class Hooligan : WalkingProtester
 
     public override void FixedUpdate ()
     {
-		if(m_target == null)
+        if (m_getBack)
+        {
+            Vector3 target = new Vector3(m_spawner.ProtestCenter + m_posFromCenter, 0, 0);
+            Vector3 dir = (target - transform.position).normalized;
+            transform.position += dir * m_breakSpeed * Time.fixedDeltaTime;
+            if (Vector3.Distance(transform.position, target) < m_attackRange)
+            {
+                m_target = null;
+                m_rigidbody.GetComponent<Collider>().enabled = true;
+                m_getBack = false;
+            }
+        }
+        else if (m_target == null)
         {
             base.FixedUpdate();
             Collider[] breakables = Physics.OverlapSphere(transform.position, m_visionRadius, m_layerMask);
@@ -64,6 +78,8 @@ public class Hooligan : WalkingProtester
                         {
                             m_target = breakable;
                             m_rigidbody.mass = m_breakMass;
+                            m_rigidbody.GetComponent<Collider>().enabled = false;
+                            m_posFromCenter = transform.position.x - m_spawner.ProtestCenter;
                         }
                         m_checkedBreakables.Add(breakable);
                     }
@@ -87,6 +103,7 @@ public class Hooligan : WalkingProtester
                         m_renderer.GetComponent<Animator>().enabled = true;
                         transform.localScale = new Vector3(1, 1, 1);
                         m_rigidbody.mass = 1;
+                        m_getBack = true;
                     }
                 }
                 m_lastAnimId = spriteId;
