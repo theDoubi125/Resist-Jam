@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class ConfigMenu : MonoBehaviour
 {
@@ -14,6 +15,10 @@ public class ConfigMenu : MonoBehaviour
 
     [SerializeField]
     private int m_money;
+
+    [SerializeField]
+    private int m_animCount = 2;
+
 
 	void Start ()
     {
@@ -49,5 +54,26 @@ public class ConfigMenu : MonoBehaviour
             return m_benevolents.RemoveBenevolent(-diff);
         m_benevolents.AddBenevolent(diff);
         return true;
+    }
+
+    public int[] ComputeStats()
+    {
+        int[] result = new int[Enum.GetNames(typeof(StatType)).Length];
+        for (int i = 0; i < result.Length; i++)
+            result[i] = 0;
+        foreach(StatPanel statPanel in m_statPanels)
+        {
+            result[(int)statPanel.Type] = statPanel.Value;
+        }
+        return result;
+    }
+
+    public void TestStats()
+    {
+        int[] stats = ComputeStats();
+        for (int i=0; i< stats.Length; i++)
+        {
+            Debug.Log((StatType)i + " : " + stats[i]);
+        }
     }
 }
