@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 0d443fe04bb91cc4ea75156c4e332a80
-timeCreated: 1487528629
+timeCreated: 1487629398
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -14,6 +14,7 @@ TextureImporter:
     21300014: boutiques_7
     21300016: boutiques_8
     21300018: boutiques_9
+    21300020: boutiques_10
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -209,6 +210,19 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 81
+        y: 85
+        width: 80
+        height: 71
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: boutiques_10
+      rect:
+        serializedVersion: 2
+        x: 162
         y: 85
         width: 80
         height: 71

@@ -13,7 +13,7 @@ public class BackgroundElement : MonoBehaviour
 
     public virtual void Update()
     {
-        if(CameraController.CameraCenter > transform.position.x + m_distanceBeforeUnspawn)
+        if(CameraController.ProtestTailPos > transform.position.x + m_distanceBeforeUnspawn)
         {
             ReleaseDelegate(m_prefab, transform);
             gameObject.SetActive(false);

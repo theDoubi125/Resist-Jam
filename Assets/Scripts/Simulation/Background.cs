@@ -9,11 +9,17 @@ public class Background : MonoBehaviour
     [SerializeField]
     private Transform[] m_secondFloorPrefab = null;
     [SerializeField]
+    private Transform m_roadPrefab = null;
+    [SerializeField]
+    private float m_roadDist = 4;
+    [SerializeField]
     private float m_cellWidth = 80;
     [SerializeField]
     private float m_cellHeight = 60;
     [SerializeField]
     private float m_spawnDistance = 10;
+    [SerializeField]
+    private int m_roadCount = 10;
     private int m_spawnedPos = 0;
 
     private Dictionary<Transform, Stack<Transform>> m_instances = new Dictionary<Transform, Stack<Transform>>();
@@ -33,6 +39,14 @@ public class Background : MonoBehaviour
                     SpawnElement(i, j, m_secondFloorPrefab);
                 }
             }
+        }
+
+        for(int i=0; i < m_roadCount; i++)
+        {
+            Transform instance = Transform.Instantiate<Transform>(m_roadPrefab);
+            Road road = instance.GetComponent<Road>();
+            road.m_roadInstances = m_roadCount;
+            instance.transform.position = new Vector3(i * road.m_roadSize, 0, 0);
         }
 	}
 
