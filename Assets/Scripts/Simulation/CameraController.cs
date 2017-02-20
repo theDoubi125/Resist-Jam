@@ -7,6 +7,8 @@ public class CameraController : MonoBehaviour
     [SerializeField]
     private ProtestSpawner m_protest;
 
+    public static float CameraCenter { get; private set; }
+
     [SerializeField]
     private float m_speed;
 
@@ -25,5 +27,6 @@ public class CameraController : MonoBehaviour
         if (m_pos > m_protest.ProtestHead - m_protest.ProtestCenter)
             m_pos = m_protest.ProtestHead - m_protest.ProtestCenter;
         transform.position = new Vector3(m_protest.ProtestCenter + m_pos, transform.position.y, transform.position.z);
-	}
+        CameraCenter = m_protest.ProtestCenter + m_pos;
+    }
 }

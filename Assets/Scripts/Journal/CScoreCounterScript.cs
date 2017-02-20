@@ -11,7 +11,7 @@ public class CScoreData
 	public int CounterTarget;
 }
 
-public class ScoreCounterScript : MonoBehaviour {
+public class CScoreCounterScript : MonoBehaviour {
 
 	private GameObject m_ScoreIncrementerParentGameObject;
 	private GameObject m_ImpactScoreParentGameObject;
@@ -36,6 +36,19 @@ public class ScoreCounterScript : MonoBehaviour {
 	private int m_Malus = -563;
 	private int m_TotatScore = 0;
 
+	private bool m_ImpactScoreStarted = false;
+	private bool m_ImpactScoreFinished = false;
+
+	public void StartImpactScore()
+	{
+		m_ImpactScoreStarted = true;
+	}
+
+	public bool IsImpactScoreFinished()
+	{
+		return m_ImpactScoreFinished;
+	}
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -50,15 +63,19 @@ public class ScoreCounterScript : MonoBehaviour {
 		InitialiseScoreIncrementer();
 		m_SecondStepParentGameObject.SetActive(false);
 	}
-	
+
 	// Update is called once per frame
 	void Update ()
 	{
-		if(UpdateScoreIncrementer())
+		if (m_ImpactScoreStarted)
 		{
-			if (InitialiseScoreIncrementer())
+			if (UpdateScoreIncrementer())
 			{
-				m_SecondStepParentGameObject.SetActive(true);
+				if (InitialiseScoreIncrementer())
+				{
+					m_ImpactScoreFinished = true;
+					m_SecondStepParentGameObject.SetActive(true);
+				}
 			}
 		}
 

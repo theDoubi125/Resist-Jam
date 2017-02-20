@@ -4,14 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-public class JournalScript : MonoBehaviour {
-
-	
+public class CJournalScript : MonoBehaviour {
+	private CEventScreenScript EventScreenScript;
 
 	// Use this for initialization
 	void Start ()
 	{
-		
+		EventScreenScript = GameObject.Find("EventScreenParent").GetComponent<CEventScreenScript>();
 	}
 	
 	// Update is called once per frame

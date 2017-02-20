@@ -66,7 +66,7 @@ public class Hooligan : WalkingProtester
         else if (m_target == null)
         {
             base.FixedUpdate();
-            Collider[] breakables = Physics.OverlapSphere(transform.position, m_visionRadius, m_layerMask);
+            Collider[] breakables = Physics.OverlapBox(transform.position, new Vector3(m_visionRadius, 100, 100), Quaternion.identity, m_layerMask);
             if (breakables.Length > 0)
             {
                 foreach (Collider collider in breakables)
