@@ -34,18 +34,21 @@ public class Hooligan : WalkingProtester
 
     [SerializeField]
     private float m_animTime = 0;
-
-    private SpriteRenderer m_renderer;
+    
     private int m_lastAnimId = 0;
     private float m_posFromCenter = 0;
 
     private HashSet<Breakable> m_checkedBreakables = new HashSet<Breakable>();
     private bool m_getBack = false;
 
+    private AnimationController m_animController;
+    private bool m_isAttacking = false;
+
     public override void Start()
     {
-        m_renderer = GetComponentInChildren<SpriteRenderer>();
         m_layerMask = LayerMask.GetMask("Breakable");
+        m_animController = GetComponentInChildren<AnimationController>();
+        m_animController.RegisterListener(OnAnimEvent);
         base.Start();
     }
 
@@ -90,23 +93,11 @@ public class Hooligan : WalkingProtester
         {
             if ((m_target.transform.position - transform.position).magnitude < m_attackRange)
             {
-                m_animTime += Time.deltaTime;
-                m_renderer.GetComponent<Animator>().enabled = false;
-                int spriteId = Mathf.FloorToInt(m_animTime / m_attackAnimSpeed) % m_attackSprites.Length;
-                m_renderer.sprite = m_attackSprites[spriteId];
-                if(m_lastAnimId > spriteId)
+                if(!m_isAttacking)
                 {
-                    if(Random.Range(0f, 1f) > m_attackSuccessRate)
-                    {
-                        m_target.Break();
-                        m_target = null;
-                        m_renderer.GetComponent<Animator>().enabled = true;
-                        transform.localScale = new Vector3(1, 1, 1);
-                        m_rigidbody.mass = 1;
-                        m_getBack = true;
-                    }
+                    m_animController.SelectAnim(1);
+                    m_isAttacking = true;
                 }
-                m_lastAnimId = spriteId;
             }
             else
             {
@@ -114,8 +105,23 @@ public class Hooligan : WalkingProtester
                 float dir = (m_target.transform.position - transform.position).x > 0 ? 1 : -1;
                 transform.localScale = new Vector3(dir, 1, 1);
             }
-
         }
-
 	}
+
+    private void OnAnimEvent(AnimationController controller, AnimEvent evt)
+    {
+        if(evt == AnimEvent.LOOP && m_isAttacking)
+        {
+            if (Random.Range(0f, 1f) > m_attackSuccessRate)
+            {
+                m_target.Break();
+                m_target = null;
+                transform.localScale = new Vector3(1, 1, 1);
+                m_rigidbody.mass = 1;
+                m_getBack = true;
+                controller.SelectAnim(0);
+                m_isAttacking = false;
+            }
+        }
+    }
 }
